@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, curly_braces_in_flow_control_structures
 
-import 'package:client/pages/favorite.dart';
+import 'package:client/components/header.dart';
+import 'package:client/pages/explore.dart';
 import 'package:client/pages/home.dart';
 import 'package:client/pages/search.dart';
 import 'package:client/pages/settings.dart';
@@ -31,7 +32,7 @@ class Layout extends StatefulWidget {
 
 class LayoutState extends State<Layout> {
   int selectedIndex = 0;
-  List pages = [Home(), Favorite(), Search(), Settings()];
+  List pages = [Home(), Explore(), Search(), Settings()];
 
   void tabChanged(int index) {
     setState(() {
@@ -42,11 +43,20 @@ class LayoutState extends State<Layout> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: pages[selectedIndex],
+      body: Padding(
+        padding: const EdgeInsets.only(top: 56, left: 8, right: 8),
+        child: Column(children: [
+          Header(),
+          SizedBox(
+            height: 24,
+          ),
+          pages[selectedIndex]
+        ]),
+      ),
       bottomNavigationBar: Container(
         color: Colors.black,
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
           child: GNav(
               gap: 8,
               backgroundColor: Colors.black,
@@ -57,7 +67,7 @@ class LayoutState extends State<Layout> {
               onTabChange: tabChanged,
               tabs: const [
                 GButton(icon: Icons.home, text: 'Home'),
-                GButton(icon: Icons.favorite_border, text: 'Likes'),
+                GButton(icon: Icons.explore, text: 'Explore'),
                 GButton(icon: Icons.search, text: 'Search'),
                 GButton(icon: Icons.settings, text: 'Settings'),
               ]),
